@@ -5,12 +5,10 @@
 #include <unistd.h>
 
 int main() {
-    int private_key = 3; //a
+    int private_key = 4;//a
     int alpha = 7; //g
     int q = 23; //p
     std::string public_key = std::to_string((int)pow(alpha, private_key) % q);
-
-    std::cout << public_key << std::endl;
 
     // Create a socket
     int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -34,8 +32,8 @@ int main() {
     std::cout << "Connected to server\n";
 
     // Exchange public keys with the server
+    std::cout << "bob : " << public_key << std::endl;
     char buffer[1024];
-    std::cout << "alice : " << public_key << std::endl;
     strcpy(buffer, public_key.c_str());
     if (send(clientSocket, buffer, strlen(buffer), 0) == -1) {
         std::cerr << "Error sending public key to server\n";
@@ -56,6 +54,7 @@ int main() {
     std::cout << "Shared secret = " << shared_secret << std::endl;
 
     
+
     // Close the socket
     close(clientSocket);
 
